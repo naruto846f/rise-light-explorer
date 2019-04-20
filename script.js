@@ -68,7 +68,7 @@ function alert_error(message){
 
 $( document ).ready(function() {
     get_height();
-    //setInterval(get_height,5000); change before commit
+    setInterval(get_height,5000);
 })
 
 var a = ['','one ','two ','three ','four ', 'five ','six ','seven ','eight ','nine ','ten ','eleven ','twelve ','thirteen ','fourteen ','fifteen ','sixteen ','seventeen ','eighteen ','nineteen '];

@@ -1,21 +1,23 @@
 rise.nodeAddress = 'https://wallet.rise.vision';
 
 
-// if  docid of height < height, update & show alert (new block)
 function get_height(){
     rise.blocks.getHeight(function(error, result) {
-        let height;
+        let height = result["height"];
+        let displayed_height = document.getElementById("height").innerHTML;
         if (!error) {
-            alert_success('Retrieved current height.');
+            if (parseInt(displayed_height) < parseInt(height)) {
+                console.log(displayed_height);
+                console.log(height);
+                alert_info('New block');
+            }
             document.getElementById("height").innerHTML = result["height"];
-            height = result["height"];
             document.getElementById('words').innerHTML = inWords(height);
             return height;
         } else {
             alert_error('Cannot retrieve height at this time, check console for error');
             console.log('error: ', error);
         }
-
     });
 }
 
@@ -28,6 +30,29 @@ function alert_success(message){
     },{
         // settings
         type: 'success',
+        allow_dismiss: false,
+        newest_on_top: false,
+        delay: 5000,
+        placement: {
+            from: "bottom",
+            align: "right"
+        },
+        animate: {
+            enter: 'animated bounceIn',
+            exit: 'animated bounceOut'
+        }
+    });
+}
+
+function alert_info(message){
+    $.notify({
+        // options
+        //icon: 'glyphicon glyphicon-warning-sign',
+        title: 'Info: ',
+        message: message
+    },{
+        // settings
+        type: 'info',
         allow_dismiss: false,
         newest_on_top: false,
         delay: 5000,
@@ -67,6 +92,7 @@ function alert_error(message){
 
 
 $( document ).ready(function() {
+    alert_success('Connected');
     get_height();
     setInterval(get_height,5000);
 })

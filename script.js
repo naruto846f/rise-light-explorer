@@ -1,18 +1,21 @@
 rise.nodeAddress = 'https://wallet.rise.vision';
 
 function get_height(){
-    rise.blocks.getHeight(function(error, result) {
+    rise.blocks.getStatus(function(error, result) {
         let height = result["height"];
+        let supply = result["supply"];
         let displayed_height = document.getElementById("height").innerHTML;
         if (!error) {
             if (parseInt(displayed_height) < parseInt(height)) {
-                console.log(displayed_height);
-                console.log(height);
+                //console.log(displayed_height);
+                //console.log(height);
                 alert_info('New block');
+                height_id();
             }
             document.getElementById("height").innerHTML = result["height"];
+            document.getElementById("supply").innerHTML = result["supply"]/100000000;
             document.getElementById('words').innerHTML = inWords(height);
-            return height;
+            return height, supply;
         } else {
             alert_error('Cannot retrieve height at this time, check console for error');
             console.log('error: ', error);
@@ -89,13 +92,6 @@ function alert_error(message){
     });
 }
 
-
-$( document ).ready(function() {
-    alert_success('Connected');
-    get_height();
-    setInterval(get_height,5000);
-})
-
 var a = ['','one ','two ','three ','four ', 'five ','six ','seven ','eight ','nine ','ten ','eleven ','twelve ','thirteen ','fourteen ','fifteen ','sixteen ','seventeen ','eighteen ','nineteen '];
 var b = ['', '', 'twenty','thirty','forty','fifty', 'sixty','seventy','eighty','ninety'];
 
@@ -109,4 +105,34 @@ function inWords (num) {
     str += (n[4] != 0) ? (a[Number(n[4])] || b[n[4][0]] + ' ' + a[n[4][1]]) + 'hundred ' : '';
     str += (n[5] != 0) ? ((str != '') ? 'and ' : '') + (a[Number(n[5])] || b[n[5][0]] + ' ' + a[n[5][1]]) + 'blocks ' : '';
     return str;
+}
+
+$( document ).ready(function() {
+    alert_success('Connected');
+    setInterval(get_height,5000);
+});
+
+//get newest block id
+function height_id() {
+    rise.blocks.getBlocks({limit: 1, orderBy:"height:desc"}).then(function ({blocks}) {
+        let id = blocks[0].id;
+        console.log(block_info(id)); //shows block info of newest block
+        return id;
+    }).catch(function (err) {
+        console.log('Error: ', err) // handle error
+    })
+}
+//blockinfo using id
+function block_info(id) {
+    rise.blocks.getBlock(id).then(function({ block }) {
+        console.log(block);
+        //document.getElementById("id").innerHTML = block.id;
+        //document.getElementById("numoftx").innerHTML = numberOfTransactions;
+        //document.getElementById("totaltxed").innerHTML = block[0].totalAmount;
+        //document.getElementById("reward").innerHTML = block[0].reward;
+
+    })
+    .catch(function(err) {
+        console.log('Error: ', err) // handle error
+    })
 }

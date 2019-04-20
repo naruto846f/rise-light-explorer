@@ -1,6 +1,5 @@
 rise.nodeAddress = 'https://wallet.rise.vision';
 
-
 function get_height(){
     rise.blocks.getHeight(function(error, result) {
         let height = result["height"];

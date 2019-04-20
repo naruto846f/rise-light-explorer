@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>Rise Light Explorer - Blocks</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+</head>
+
+<body style="background: linear-gradient(to right, #0062E6, #33AEFF);">
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-light static-top">
+    <div class="container">
+      <a class="navbar-brand" href="#">Rise Light Explorer</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="#">Height
+              <span class="sr-only">(current)</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Blocks</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Transactions</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">About</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Page Content -->
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12 text-center">
+        <h1 id="height" class="font-weight-light mt-4 text-white font-weight-bold">Retrieving height...</h1>
+        <p class="lead text-white-50"><span id="words"></span></p>
+        <ul class="list-unstyled">
+          <li>Bootstrap 4.2.1</li>
+          <li>jQuery 3.3.1</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="vendor/jquery/jquery.min.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script type="text/javascript" src="https://gitcdn.xyz/cdn/risevision/rise-js-sdk/master/dist/browser/index.js"></script>
+  <script>
+      rise.nodeAddress = 'https://wallet.rise.vision';
+
+      function get_height(){
+          rise.blocks.getHeight(function(error, result) {
+              if (!error) {
+                  //console.log(result);
+                  document.getElementById("height").innerHTML = result["height"];
+                  height = result["height"];
+                  document.getElementById('words').innerHTML = inWords(height);
+                  return height;
+              } else {
+                  console.log('error: ', error);
+              }
+
+          });
+      }
+      $( document ).ready(function() {
+          get_height();
+          setInterval(get_height,5000);
+      })
+
+      var a = ['','one ','two ','three ','four ', 'five ','six ','seven ','eight ','nine ','ten ','eleven ','twelve ','thirteen ','fourteen ','fifteen ','sixteen ','seventeen ','eighteen ','nineteen '];
+      var b = ['', '', 'twenty','thirty','forty','fifty', 'sixty','seventy','eighty','ninety'];
+
+      function inWords (num) {
+          if ((num = num.toString()).length > 9) return 'overflow';
+          n = ('000000000' + num).substr(-9).match(/^(\d{2})(\d{2})(\d{2})(\d{1})(\d{2})$/);
+          if (!n) return; var str = '';
+          str += (n[1] != 0) ? (a[Number(n[1])] || b[n[1][0]] + ' ' + a[n[1][1]]) + 'crore ' : '';
+          str += (n[2] != 0) ? (a[Number(n[2])] || b[n[2][0]] + ' ' + a[n[2][1]]) + 'lakh ' : '';
+          str += (n[3] != 0) ? (a[Number(n[3])] || b[n[3][0]] + ' ' + a[n[3][1]]) + 'thousand ' : '';
+          str += (n[4] != 0) ? (a[Number(n[4])] || b[n[4][0]] + ' ' + a[n[4][1]]) + 'hundred ' : '';
+          str += (n[5] != 0) ? ((str != '') ? 'and ' : '') + (a[Number(n[5])] || b[n[5][0]] + ' ' + a[n[5][1]]) + 'blocks ' : '';
+          return str;
+      }
+  </script>
+</body>
+
+</html>

@@ -1,6 +1,7 @@
 rise.nodeAddress = 'https://wallet.rise.vision';
 
 $( document ).ready(function() {
+    get_height();
     alert_success('Connected');
     setInterval(get_height,5000);
 });

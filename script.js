@@ -112,25 +112,34 @@ $( document ).ready(function() {
     setInterval(get_height,5000);
 });
 
-//get newest block id
 function height_id() {
     rise.blocks.getBlocks({limit: 1, orderBy:"height:desc"}).then(function ({blocks}) {
         let id = blocks[0].id;
         let ntxs = blocks[0].numberOfTransactions;
         let txed = blocks[0].totalAmount/100000000;
-        console.log(block_info(id)); //shows block info of newest block
+        let generatorPublicKey = blocks[0].generatorPublicKey;
+        get_delegate(generatorPublicKey);
+        console.log(block_info(id));
         $('#id').text(id);
         $('#ntxs').text(ntxs);
         $('#txed').text(txed);
-        //if (blocks.totalAmount > 0){
-            //$('#txed').text(txed);
-        //}
         return id;
     }).catch(function (err) {
         console.log('Error: ', err) // handle error
     })
 }
-//blockinfo using id
+
+function get_delegate(public_key){
+    rise.delegates.getByPublicKey(public_key).then(function({ delegate }) {
+            let username = delegate.username
+            $('#forger').text(username);
+            return username;
+        })
+        .catch(function(err) {
+            console.log('Error: ', err) // handle error
+        })
+}
+
 function block_info(id) {
     rise.blocks.getBlock(id).then(function({ block }) {
         console.log(block);

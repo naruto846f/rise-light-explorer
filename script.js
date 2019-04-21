@@ -12,9 +12,9 @@ function get_height(){
                 alert_info('New block');
                 height_id();
             }
-            document.getElementById("height").innerHTML = result["height"];
-            document.getElementById("supply").innerHTML = result["supply"]/100000000;
-            document.getElementById('words').innerHTML = inWords(height);
+            $('#height').text(height);
+            $('#supply').text(supply/100000000);
+            $('#words').text(inWords(height));
             return height, supply;
         } else {
             alert_error('Cannot retrieve height at this time, check console for error');

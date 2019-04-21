@@ -116,7 +116,11 @@ $( document ).ready(function() {
 function height_id() {
     rise.blocks.getBlocks({limit: 1, orderBy:"height:desc"}).then(function ({blocks}) {
         let id = blocks[0].id;
+        let ntxs = blocks[0].numberOfTransactions;
         console.log(block_info(id)); //shows block info of newest block
+        $('#id').text(id);
+        $('#ntxs').text(ntxs);
+
         return id;
     }).catch(function (err) {
         console.log('Error: ', err) // handle error
@@ -126,7 +130,6 @@ function height_id() {
 function block_info(id) {
     rise.blocks.getBlock(id).then(function({ block }) {
         console.log(block);
-        //document.getElementById("id").innerHTML = block.id;
         //document.getElementById("numoftx").innerHTML = numberOfTransactions;
         //document.getElementById("totaltxed").innerHTML = block[0].totalAmount;
         //document.getElementById("reward").innerHTML = block[0].reward;

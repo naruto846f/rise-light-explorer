@@ -19,7 +19,7 @@ function get_height(){
                 height_id();
             }
             $('#height').text(height);
-            $('#supply').text(supply/100000000);
+            $('#supply').text(Math.round(supply/100000000));
             $('#words').text(inWords(height));
             return height, supply;
         } else {
@@ -31,7 +31,7 @@ function get_height(){
 
 function get_delegate(public_key){
     rise.delegates.getByPublicKey(public_key).then(function({ delegate }) {
-        let username = delegate.username
+        let username = delegate.username;
         $('#forger').text(username);
         return username;
     })
@@ -68,7 +68,7 @@ function height_id() {
     rise.blocks.getBlocks({limit: 1, orderBy:"height:desc"}).then(function ({blocks}) {
         let id = blocks[0].id;
         let ntxs = blocks[0].numberOfTransactions;
-        let txed = blocks[0].totalAmount/100000000;
+        let txed = Math.round(blocks[0].totalAmount/100000000);
         let generatorPublicKey = blocks[0].generatorPublicKey;
         get_delegate(generatorPublicKey);
         console.log(block_info(id));

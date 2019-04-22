@@ -8,13 +8,11 @@ $( document ).ready(function() {
 
 function get_height(){
     rise.blocks.getStatus(function(error, result) {
-        let height = result["height"];
-        let supply = result["supply"];
-        let displayed_height = document.getElementById("height").innerHTML;
         if (!error) {
+            let height = result["height"];
+            let supply = result["supply"];
+            let displayed_height = document.getElementById("height").innerHTML;
             if (parseInt(displayed_height) < parseInt(height)) {
-                //console.log(displayed_height);
-                //console.log(height);
                 alert_info('New block');
                 height_id();
             }
@@ -23,7 +21,7 @@ function get_height(){
             $('#words').text(numberToWords.toWords(height) + ' blocks');
             return height, supply;
         } else {
-            alert_error('Cannot retrieve height at this time, check console for error');
+            alert_error('Could not retrieve height, retrying in 5sec');
             console.log('error: ', error);
         }
     });
@@ -36,6 +34,7 @@ function get_delegate(public_key){
         return username;
     })
         .catch(function(err) {
+            alert_error('Could not retrieve delegate name, retrying in 5sec');
             console.log('Error: ', err) // handle error
         })
 }
@@ -43,8 +42,10 @@ function get_delegate(public_key){
 function block_info(id) {
     rise.blocks.getBlock(id).then(function({ block }) {
         console.log(block);
+        return block;
     })
         .catch(function(err) {
+            alert_error('Could not retrieve block info, retrying in 5sec');
             console.log('Error: ', err) // handle error
         })
 }
@@ -62,6 +63,7 @@ function height_id() {
         $('#txed').text(txed);
         return id;
     }).catch(function (err) {
+        alert_error('Could not retrieve latest block info, retrying in 5sec');
         console.log('Error: ', err) // handle error
     })
 }

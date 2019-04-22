@@ -2,7 +2,7 @@ rise.nodeAddress = 'https://wallet.rise.vision';
 
 $( document ).ready(function() {
     get_height();
-    alert_success('Connected');
+    alert_success('Got height!');
     setInterval(get_height,5000);
 });
 
@@ -16,9 +16,9 @@ function get_height(){
             if (parseInt(displayed_height) < parseInt(height)) {
                 alert_info('New block');
                 height_id();
-                $('#height').addClass('animated rollIn');
-            }
-            $('#height').text(height);
+                $('#height').addClass('animated rollIn');//animate only on change
+            } //else?
+            $('#height').text(height); //get height value
             $('#supply').text(Math.round(supply/100000000));
             $('#words').text(numberToWords.toWords(height) + ' blocks');
             return height, supply;
@@ -27,31 +27,6 @@ function get_height(){
             console.log('error: ', error);
         }
     });
-}
-
-function get_delegate(public_key){
-    $('#forger').removeClass('animated fadeInRight');
-    rise.delegates.getByPublicKey(public_key).then(function({ delegate }) {
-        let username = delegate.username;
-        $('#forger').text(username);
-        $('#forger').addClass('animated fadeInRight');
-        return username;
-    })
-        .catch(function(err) {
-            alert_error('Could not retrieve delegate name, retrying...');
-            console.log('Error: ', err) // handle error
-        })
-}
-
-function block_info(id) {
-    rise.blocks.getBlock(id).then(function({ block }) {
-        console.log(block);
-        return block;
-    })
-        .catch(function(err) {
-            alert_error('Could not retrieve block info, retrying...');
-            console.log('Error: ', err) // handle error
-        })
 }
 
 function height_id() {
@@ -70,6 +45,30 @@ function height_id() {
         alert_error('Could not retrieve latest block info, retrying...');
         console.log('Error: ', err) // handle error
     })
+}
+
+function get_delegate(public_key){
+    $('#forger').removeClass('animated fadeInRight');//remove to re-enable animation
+    rise.delegates.getByPublicKey(public_key).then(function({ delegate }) {
+        let username = delegate.username;
+        $('#forger').text(username).addClass('animated fadeInRight');
+        return username;
+    })
+        .catch(function(err) {
+            alert_error('Could not retrieve delegate name, retrying...');
+            console.log('Error: ', err) // handle error
+        })
+}
+
+function block_info(id) {
+    rise.blocks.getBlock(id).then(function({ block }) {
+        console.log(block);
+        return block;
+    })
+        .catch(function(err) {
+            alert_error('Could not retrieve block info, retrying...');
+            console.log('Error: ', err) // handle error
+        })
 }
 
 function alert_success(message){

@@ -30,9 +30,11 @@ function get_height(){
 }
 
 function get_delegate(public_key){
+    $('#forger').removeClass('animated fadeInRight');
     rise.delegates.getByPublicKey(public_key).then(function({ delegate }) {
         let username = delegate.username;
         $('#forger').text(username);
+        $('#forger').addClass('animated fadeInRight');
         return username;
     })
         .catch(function(err) {

@@ -36,7 +36,7 @@ function get_delegate(public_key){
         return username;
     })
         .catch(function(err) {
-            alert_error('Could not retrieve delegate name, retrying in 5sec');
+            alert_error('Could not retrieve delegate name, retrying...');
             console.log('Error: ', err) // handle error
         })
 }
@@ -47,7 +47,7 @@ function block_info(id) {
         return block;
     })
         .catch(function(err) {
-            alert_error('Could not retrieve block info, retrying in 5sec');
+            alert_error('Could not retrieve block info, retrying...');
             console.log('Error: ', err) // handle error
         })
 }
@@ -65,7 +65,7 @@ function height_id() {
         $('#txed').text(txed);
         return id;
     }).catch(function (err) {
-        alert_error('Could not retrieve latest block info, retrying in 5sec');
+        alert_error('Could not retrieve latest block info, retrying...');
         console.log('Error: ', err) // handle error
     })
 }

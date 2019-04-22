@@ -1,7 +1,7 @@
 //rise.nodeAddress = 'https://wallet.rise.vision';
 rise.nodeAddress = 'http://45.76.143.15:5555';
 $( document ).ready(function() {
-    $('#id_text').addClass('invisible');
+    $('#id_link').addClass('invisible');
     get_height();
     alert_success('Got height!');
     alert_warning('Waiting for a new block to get delegate info and id.');
@@ -22,7 +22,7 @@ function get_height(){
                 $('#height').addClass('animated rollIn');//animate only on change
             } //else?
             $('#height').text(height); //get height value
-            $('#supply').text(Math.round(supply/100000000));
+            $('#supply').text(Math.round(supply/100000000) + ' RISE in circulation');
             $('#words').text(numberToWords.toWords(height) + ' blocks');
             return height, supply;
         } else {
@@ -39,14 +39,16 @@ function height_id() {
         let ntxs = blocks[0].numberOfTransactions;
         let txed = Math.round(blocks[0].totalAmount/100000000);
         let generatorPublicKey = blocks[0].generatorPublicKey;
+        let id_link = 'https://explorer.rise.vision/block/' + id;
         get_delegate(generatorPublicKey);
         console.log(block_info(id));
-        $('#id').text(id);
-        $('#id_text').removeClass('invisible');
-        $('#id_spinner').remove();
+        $('#id_link').removeClass('invisible');
+        $('#id').text('id: ' + id);
+        $('#spinner').remove();
         $('#delegate_spinner').remove();
-        $('#ntxs').text(ntxs);
-        $('#txed').text(txed);
+        $('#ntxs').text('Includes: '+ ntxs +' transaction/s');
+        $('#txed').text('Transacted: ' + txed + ' RISE in this block');
+        $("#id_link").attr("href", id_link);
         return id;
     }).catch(function (err) {
         alert_error('Could not retrieve latest block info, retrying...');

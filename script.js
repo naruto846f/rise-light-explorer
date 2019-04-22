@@ -25,6 +25,7 @@ function get_height(){
         } else {
             alert_error('Could not retrieve height, retrying...');
             console.log('error: ', error);
+            get_height();//retry
         }
     });
 }
@@ -43,20 +44,28 @@ function height_id() {
         return id;
     }).catch(function (err) {
         alert_error('Could not retrieve latest block info, retrying...');
-        console.log('Error: ', err) // handle error
+        console.log('Error: ', err); // handle error
+        height_id();//retry
     })
 }
 
 function get_delegate(public_key){
     $('#forger').removeClass('animated fadeInRight');//remove to re-enable animation
+    $('#rank').text(rank).removeClass('animated fadeInRight');
     rise.delegates.getByPublicKey(public_key).then(function({ delegate }) {
         let username = delegate.username;
+        let rank = delegate.rank;
+        let delegate_link = 'https://explorer.rise.vision/address/' + delegate.address;
+        $("#delegate").attr("href", delegate_link);
+        console.log(delegate);
         $('#forger').text(username).addClass('animated fadeInRight');
+        $('#rank').text(rank).addClass('animated fadeInRight');
         return username;
     })
         .catch(function(err) {
             alert_error('Could not retrieve delegate name, retrying...');
-            console.log('Error: ', err) // handle error
+            console.log('Error: ', err); // handle error
+            get_delegate(public_key);//retry
         })
 }
 
@@ -67,7 +76,8 @@ function block_info(id) {
     })
         .catch(function(err) {
             alert_error('Could not retrieve block info, retrying...');
-            console.log('Error: ', err) // handle error
+            console.log('Error: ', err); // handle error
+            block_info(id);//retry
         })
 }
 

@@ -3,6 +3,7 @@ rise.nodeAddress = 'https://wallet.rise.vision';
 $( document ).ready(function() {
     get_height();
     alert_success('Got height!');
+    alert_warning('Waiting for a new block...');
     setInterval(get_height,5000);
 });
 
@@ -14,6 +15,7 @@ function get_height(){
             let supply = result["supply"];
             let displayed_height = document.getElementById("height").innerHTML;
             if (parseInt(displayed_height) < parseInt(height)) {
+                warning.close();
                 alert_info('New block');
                 height_id();
                 $('#height').addClass('animated rollIn');//animate only on change
@@ -139,6 +141,32 @@ function alert_error(message){
         allow_dismiss: false,
         newest_on_top: false,
         delay: 5000,
+        placement: {
+            from: "bottom",
+            align: "right"
+        },
+        animate: {
+            enter: 'animated bounceIn',
+            exit: 'animated bounceOut'
+        }
+    });
+}
+
+function alert_warning(message){
+    warning = $.notify({
+        // options
+        //icon: 'vendor/img/spinner.gif',
+        title: '<div class="spinner-border" role="status">\n' +
+            '  <span class="sr-only"></span>\n' +
+            '</div>',
+        message: message
+    }, {
+        // settings
+        type: 'warning',
+        allow_dismiss: false,
+        newest_on_top: false,
+        delay: 30000,
+        //icon_type: 'image',
         placement: {
             from: "bottom",
             align: "right"

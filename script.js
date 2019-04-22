@@ -42,13 +42,12 @@ function height_id() {
         let id_link = 'https://explorer.rise.vision/block/' + id;
         get_delegate(generatorPublicKey);
         console.log(block_info(id));
-        $('#id_link').removeClass('invisible');
+        $('#id_link').removeClass('invisible').attr("href", id_link);
         $('#id').text('id: ' + id);
         $('#spinner').remove();
         $('#delegate_spinner').remove();
         $('#ntxs').text('Includes: '+ ntxs +' transaction/s');
         $('#txed').text('Transacted: ' + txed + ' RISE in this block');
-        $("#id_link").attr("href", id_link);
         return id;
     }).catch(function (err) {
         alert_error('Could not retrieve latest block info, retrying...');

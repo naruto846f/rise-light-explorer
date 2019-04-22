@@ -1,5 +1,5 @@
-//rise.nodeAddress = 'https://wallet.rise.vision';
-rise.nodeAddress = 'http://45.76.143.15:5555';
+rise.nodeAddress = 'http://wallet.rise.vision';
+//rise.nodeAddress = 'http://45.76.143.15:5555';
 $( document ).ready(function() {
     $('#id_link').addClass('invisible');
     get_height();
@@ -42,7 +42,7 @@ function height_id() {
         let id_link = 'https://explorer.rise.vision/block/' + id;
         get_delegate(generatorPublicKey);
         console.log(block_info(id));
-        $('#id_link').removeClass('invisible').attr("href", id_link);
+        $('#id_link').removeClass('invisible').attr("href", id_link);//show and link to block
         $('#id').text('id: ' + id);
         $('#spinner').remove();
         $('#delegate_spinner').remove();

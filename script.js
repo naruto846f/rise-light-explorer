@@ -53,15 +53,15 @@ function height_id() {
 
 function get_delegate(public_key){
     $('#forger').removeClass('animated fadeInRight');//remove to re-enable animation
-    $('#rank').text(rank).removeClass('animated fadeInRight');
+    $('#rank').removeClass('animated fadeInRight');
     rise.delegates.getByPublicKey(public_key).then(function({ delegate }) {
         let username = delegate.username;
         let rank = delegate.rank;
         let delegate_link = 'https://explorer.rise.vision/address/' + delegate.address;
         $("#delegate").attr("href", delegate_link);
-        console.log(delegate);
         $('#forger').text(username).addClass('animated fadeInRight');
         $('#rank').text(rank).addClass('animated fadeInRight');
+        console.log(delegate);
         return username;
     })
         .catch(function(err) {

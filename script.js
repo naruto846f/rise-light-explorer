@@ -7,6 +7,7 @@ $( document ).ready(function() {
 });
 
 function get_height(){
+    $('#height').removeClass('animated rollIn');
     rise.blocks.getStatus(function(error, result) {
         if (!error) {
             let height = result["height"];
@@ -15,13 +16,14 @@ function get_height(){
             if (parseInt(displayed_height) < parseInt(height)) {
                 alert_info('New block');
                 height_id();
+                $('#height').addClass('animated rollIn');
             }
             $('#height').text(height);
             $('#supply').text(Math.round(supply/100000000));
             $('#words').text(numberToWords.toWords(height) + ' blocks');
             return height, supply;
         } else {
-            alert_error('Could not retrieve height, retrying in 5sec');
+            alert_error('Could not retrieve height, retrying...');
             console.log('error: ', error);
         }
     });

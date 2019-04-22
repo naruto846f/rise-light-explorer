@@ -52,13 +52,15 @@
       <div class="col-lg-12 text-center">
           <h1 id="height" class="font-weight-light mt-4 text-white font-weight-bold">Retrieving height...</h1>
           <a id="delegate" target="_blank" class="btn btn-light">
+              <span id="delegate_spinner" class="spinner-border text-dark spinner-border-sm" role="status" aria-hidden="true"></span>
               <span class="font-weight-bold" id="forger"></span> <span id="rank" class="badge badge-secondary"></span>
           </a>
             <br>
             <br>
             <p class="lead text-white-50"><span id="words"></span></p>
             <p class="lead text-white-50">supply: <span id="supply"></span> RISE</p>
-            <p class="lead text-white-50">id: <span id="id"></span></p>
+              <span id="id_text" class="lead text-white-50">id: </span><span class="lead text-white-50" id="id"></span>
+              <span id="id_spinner" class="spinner-border text-light spinner-border-sm" role="status" aria-hidden="true"></span>
             <p class="lead text-white-50">Includes: <span id="ntxs"></span> transaction/s</p>
             <p class="lead text-white-50">Transacted: <span id="txed"></span> RISE in this block</p>
             <ul class="list-unstyled">

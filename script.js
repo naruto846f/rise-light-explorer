@@ -1,6 +1,7 @@
 //rise.nodeAddress = 'https://wallet.rise.vision';
 rise.nodeAddress = 'http://45.76.143.15:5555';
 $( document ).ready(function() {
+    $('#id_text').addClass('invisible');
     get_height();
     alert_success('Got height!');
     alert_warning('Waiting for a new block to get delegate info and id.');
@@ -15,7 +16,7 @@ function get_height(){
             let supply = result["supply"];
             let displayed_height = document.getElementById("height").innerHTML;
             if (parseInt(displayed_height) < parseInt(height)) {
-                warning.close();
+                warning.close();//close warning when block updates
                 alert_info('New block');
                 height_id();
                 $('#height').addClass('animated rollIn');//animate only on change
@@ -41,6 +42,9 @@ function height_id() {
         get_delegate(generatorPublicKey);
         console.log(block_info(id));
         $('#id').text(id);
+        $('#id_text').removeClass('invisible');
+        $('#id_spinner').remove();
+        $('#delegate_spinner').remove();
         $('#ntxs').text(ntxs);
         $('#txed').text(txed);
         return id;

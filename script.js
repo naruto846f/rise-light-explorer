@@ -3,7 +3,7 @@ rise.nodeAddress = 'https://wallet.rise.vision';
 $( document ).ready(function() {
     get_height();
     alert_success('Got height!');
-    alert_warning('Waiting for a new block...');
+    alert_warning('Waiting for a new block to get delegate info and id.');
     setInterval(get_height,5000);
 });
 

@@ -1,5 +1,5 @@
-rise.nodeAddress = 'http://wallet.rise.vision';
-//rise.nodeAddress = 'http://45.76.143.15:5555';
+//rise.nodeAddress = 'https://wallet.rise.vision';
+rise.nodeAddress = 'http:/' + '/45.76.143.15:5555';
 $( document ).ready(function() {
     $('#id_link').addClass('invisible');
     get_height();

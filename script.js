@@ -156,7 +156,7 @@ function alert_warning(message){
     warning = $.notify({
         // options
         //icon: 'vendor/img/spinner.gif',
-        title: '<div class="spinner-border" role="status">\n' +
+        title: '<div class="spinner-border spinner-border-sm" role="status">\n' +
             '  <span class="sr-only"></span>\n' +
             '</div>',
         message: message

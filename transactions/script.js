@@ -2,12 +2,13 @@ rise.nodeAddress = 'https://wallet.rise.vision';
 //rise.nodeAddress = 'http://45.76.143.15:5555';
 
 $( document ).ready(function() {
+    transactions();
     setInterval(transactions,5000);
 });
 
 function transactions() {
     rise.transactions.getList({limit: 5, orderBy:"timestamp:desc"}).then(function ({transactions}) {
-            console.log(transactions[0]);
+            console.log(transactions);
             let tid_link = 'https://explorer.rise.vision/tx/';
             $('#t1').text((transactions[0].senderId).substring(0,5) + '...R' + ' -- ' + Math.round(transactions[0].amount/100000000) + 'RISE --> ' + (transactions[0].recipientId).substring(0,5)+'...R ' + transactions[0].confirmations + ' blocks ago');
             $('#tl1').attr("href", tid_link + transactions[0].id);

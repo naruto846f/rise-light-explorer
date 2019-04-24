@@ -22,7 +22,7 @@ function get_height(){
                 $('#height').addClass('animated rollIn');//animate only on change
             } //else?
             $('#height').text(height); //get height value
-            $('#supply').text(Math.round(supply/100000000) + ' RISE in circulation');
+            $('#supply').text(Math.round(supply/1000000000) + ' RISE in circulation');
             $('#words').text(numberToWords.toWords(height) + ' blocks');
             return height, supply;
         } else {

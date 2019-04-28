@@ -15,7 +15,7 @@ function transactions() {
             for (i = 0; i < 5; i++) {
                     $('#sndr'+(i+1)).text((transactions[i].senderId).substring(0,5) + '...R');
                     $('#amnt'+(i+1)).text(Math.round(transactions[i].amount/100000000) + 'RISE');
-                    $('#rcvr'+(i+1)).text((transactions[i].recipientId).substring(0,5)+'...R ');
+                    $('#rcvr'+(i+1)).text((' ' + transactions[i].recipientId).substring(0,5)+'...R ');
                     $('#confs'+(i+1)).text(transactions[i].confirmations + ' blocks ago');
                     $('#tl'+(i+1)).attr("href", tid_link + transactions[i].id);
                 }

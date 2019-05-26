@@ -7,7 +7,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
   <link rel="shortcut icon" type="image/png" href="https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/microsoft/153/right-pointing-magnifying-glass_1f50e.png"/>
-  <title>Rise Light Explorer - Transactions</title>
+  <title>Rise Light Explorer - Broadcast</title>
 
   <!-- Bootstrap core CSS -->
   <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -38,13 +38,13 @@
           <li class="nav-item">
             <a class="nav-link" href="#">Transactions</a>
           </li>-->
-          <li class="nav-item active">
-            <a class="nav-link" href="#">Transactions
-              <span class="sr-only">(current)</span></a>
-          </li>
           <li class="nav-item">
-            <a class="nav-link" href="../broadcast">Broadcast
+            <a class="nav-link" href="../transactions">Transactions
               <span class="sr-only"></span></a>
+          </li>
+          <li class="nav-item active">
+            <a class="nav-link" href="#">Broadcast
+              <span class="sr-only">(current)</span></a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="../about">About</a>
@@ -60,33 +60,16 @@
       <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
         <div class="card card-signin my-5">
           <div class="card-body text-center">
-            <h5 class="card-title text-center">Last 5 Transactions</h5>
+            <h5 class="card-title text-center">Broadcast a transaction</h5>
             <hr class="my-4">
-              <a id="tl1" href="#" target="_blank" class="btn btn-outline-primary btn-sm" role="button">
-                  <span id="sndr1">Sender </span> <span id="amnt1" class="badge badge-light">Amount</span><i class="fas fa-arrow-right"></i><span id="rcvr1"> Receiver</span><span id="confs1"> Blocks ago</span>
-              </a>
+
+            <div class="form-group">
+              <label for="tx_input">Paste transaction here:</label>
+              <textarea class="form-control" rows="5" id="tx_input"></textarea>
               <br>
-              <br>
-              <a id="tl2" href="#" target="_blank" class="btn btn-outline-primary btn-sm" role="button">
-                  <span id="sndr2">Sender </span> <span id="amnt2" class="badge badge-light">Amount</span><i class="fas fa-arrow-right"></i><span id="rcvr2"> Receiver</span><span id="confs2"> Blocks ago</span>
-              </a>
-              <br>
-              <br>
-              <a id="tl3" href="#" target="_blank" class="btn btn-outline-primary btn-sm" role="button">
-                  <span id="sndr3">Sender </span> <span id="amnt3" class="badge badge-light">Amount</span><i class="fas fa-arrow-right"></i><span id="rcvr3"> Receiver</span><span id="confs3"> Blocks ago</span>
-              </a>
-              <br>
-              <br>
-              <a id="tl4" href="#" target="_blank" class="btn btn-outline-primary btn-sm" role="button">
-                  <span id="sndr4">Sender </span> <span id="amnt4" class="badge badge-light">Amount</span><i class="fas fa-arrow-right"></i><span id="rcvr4"> Receiver</span><span id="confs4"> Blocks ago</span>
-              </a>
-              <br>
-              <br>
-             <a id="tl5" href="#" target="_blank" class="btn btn-outline-primary btn-sm" role="button">
-                  <span id="sndr5">Sender </span> <span id="amnt5" class="badge badge-light">Amount</span><i class="fas fa-arrow-right"></i><span id="rcvr5"> Receiver</span><span id="confs5"> Blocks ago</span>
-              </a>
-              <br>
-              <br>
+              <button class="btn btn-block btn-primary text-uppercase" onclick="button_click()">broadcast</button>
+            </div>
+
             <hr class="my-4">
             <a href="https://github.com/spookiestevie/rise-light-explorer" target="_blank" class="btn btn-social-icon btn-lg btn-light">
               <span class="fab fa-github fa-lg"></span>
@@ -106,6 +89,7 @@
   <script type="text/javascript" src="../vendor/risejs/index.js"></script>
   <!-- main -->
   <script type="text/javascript" src="script.js"></script>
+
 
 </body>
 

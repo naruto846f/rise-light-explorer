@@ -6,16 +6,30 @@ $( document ).ready(function() {
 });
 
 function button_click(){
-    var transaction = $('#tx_input').val();
-    console.log(transaction);
+    var secret = $('#secret').val();
+    var amount = $('#amount').val();
+    var recipient = $('#recipient').val();
 
-    rise.transactions.put(transaction).then(function ( {accepted} ) {
+    const riseTx = Rise.txs.createAndSign(
+        {
+            kind: 'send',
+            amount: amount, // Satoshi
+            recipient: recipient
+        },
+        secret
+    )
+    console.log(riseTx);
+
+    rise.transactions.put(riseTx).then(function ( {invalid} ) {
         //ensures transaction is accepted by network before anything else...
-        if (accepted.length < 1) {
-            alert_error('Please check transaction and try again');
+        console.log(invalid[0])
+        if (invalid.length >= 1) {
+            alert_error(invalid[0].reason);
+            $('#exampleModal').modal('hide')
         } else {
-            console.log( 'tx ' + accepted[0] + ' accepted by network ');
-            alert_success('Transaction sent to network with id: ' + accepted[0]);
+            console.log( 'tx ' + invalid[0].id + ' accepted by network ');
+            alert_success('Transaction sent to network with id: ' + invalid[0].id);
+            $('#exampleModal').modal('hide')
         }
     })
         .catch(function (err) {

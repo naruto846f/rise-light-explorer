@@ -16,7 +16,7 @@ function transactions() {
             let i;
             for (i = 0; i < 5; i++) {
                     $('#sndr'+(i+1)).text((transactions[i].senderId).substring(0,5) + '...R');
-                    if (transactions[i].amount/satoshi_to_rise > 10000){
+                    if (transactions[i].amount/satoshi_to_rise >= 10000){
                         $('#tl'+(i+1)).addClass('btn-outline-success');
                     } else {
                         $('#tl'+(i+1)).addClass('btn-outline-primary');

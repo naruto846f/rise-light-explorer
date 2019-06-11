@@ -1,5 +1,7 @@
 rise.nodeAddress = 'https://wallet.rise.vision';
 //rise.nodeAddress = 'http://45.76.143.15:5555';
+const satoshi_to_rise = 100000000;
+
 $( document ).ready(function() {
     $('#id_link').addClass('invisible');
     get_height();
@@ -22,7 +24,7 @@ function get_height(){
                 $('#height').addClass('animated rollIn');//animate only on change
             } //else?
             $('#height').text(height); //get height value
-            $('#supply').text(Math.round(supply/100000000) + ' RISE in circulation');
+            $('#supply').text(Math.round(supply/satoshi_to_rise) + ' RISE in circulation');
             $('#words').text(numberToWords.toWords(height) + ' blocks');
             return height, supply;
         } else {
@@ -37,7 +39,7 @@ function height_id() {
     rise.blocks.getBlocks({limit: 1, orderBy:"height:desc"}).then(function ({blocks}) {
         let id = blocks[0].id;
         let ntxs = blocks[0].numberOfTransactions;
-        let txed = Math.round(blocks[0].totalAmount/100000000);
+        let txed = Math.round(blocks[0].totalAmount/satoshi_to_rise);
         let generatorPublicKey = blocks[0].generatorPublicKey;
         let id_link = 'https://explorer.rise.vision/block/' + id;
         get_delegate(generatorPublicKey);

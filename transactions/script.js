@@ -14,6 +14,11 @@ function transactions() {
             let i;
             for (i = 0; i < 5; i++) {
                     $('#sndr'+(i+1)).text((transactions[i].senderId).substring(0,5) + '...R');
+                    if (transactions[i].amount/100000000 > 10000){
+                        $('#tl'+(i+1)).addClass('btn-outline-success');
+                    } else {
+                        $('#tl'+(i+1)).addClass('btn-outline-primary');
+                    }
                     $('#amnt'+(i+1)).text(Math.round(transactions[i].amount/100000000) + 'RISE');
                     $('#rcvr'+(i+1)).text((' ' + transactions[i].recipientId).substring(0,6)+'...R ');
                     $('#confs'+(i+1)).text(transactions[i].confirmations + ' blocks ago');

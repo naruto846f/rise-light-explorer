@@ -1,6 +1,8 @@
 rise.nodeAddress = 'https://wallet.rise.vision';
 //rise.nodeAddress = 'http://45.76.143.15:5555';
 
+const satoshi_to_rise = 100000000;
+
 $( document ).ready(function() {
     transactions();
     setInterval(transactions,5000);
@@ -14,15 +16,16 @@ function transactions() {
             let i;
             for (i = 0; i < 5; i++) {
                     $('#sndr'+(i+1)).text((transactions[i].senderId).substring(0,5) + '...R');
-                    if (transactions[i].amount/100000000 > 10000){
+                    if (transactions[i].amount/satoshi_to_rise > 10000){
                         $('#tl'+(i+1)).addClass('btn-outline-success');
                     } else {
                         $('#tl'+(i+1)).addClass('btn-outline-primary');
                     }
-                    $('#amnt'+(i+1)).text(Math.round(transactions[i].amount/100000000) + 'RISE');
+                    $('#amnt'+(i+1)).text(Math.round(transactions[i].amount/satoshi_to_rise) + 'RISE');
                     $('#rcvr'+(i+1)).text((' ' + transactions[i].recipientId).substring(0,6)+'...R ');
                     $('#confs'+(i+1)).text(transactions[i].confirmations + ' blocks ago');
                     $('#tl'+(i+1)).attr("href", tid_link + transactions[i].id);
+                    $('#spinner').remove();
                     $('#tl'+(i+1)).removeClass('invisible');
                     $('#tl'+(i+1)).addClass('animated fadeInRight');
                 }

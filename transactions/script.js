@@ -23,6 +23,7 @@ function transactions() {
                     $('#rcvr'+(i+1)).text((' ' + transactions[i].recipientId).substring(0,6)+'...R ');
                     $('#confs'+(i+1)).text(transactions[i].confirmations + ' blocks ago');
                     $('#tl'+(i+1)).attr("href", tid_link + transactions[i].id);
+                    $('#tl'+(i+1)).removeClass('invisible');
                     $('#tl'+(i+1)).addClass('animated fadeInRight');
                 }
         })

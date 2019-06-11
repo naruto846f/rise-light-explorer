@@ -14,6 +14,7 @@ function transactions() {
             let tid_link = 'https://explorer.rise.vision/tx/';
             //for (tx in range) {}
             let i;
+            $('#spinner').remove();
             for (i = 0; i < 5; i++) {
                     $('#sndr'+(i+1)).text((transactions[i].senderId).substring(0,5) + '...R');
                     if (transactions[i].amount/satoshi_to_rise >= 10000){
@@ -25,7 +26,6 @@ function transactions() {
                     $('#rcvr'+(i+1)).text((' ' + transactions[i].recipientId).substring(0,6)+'...R ');
                     $('#confs'+(i+1)).text(transactions[i].confirmations + ' blocks ago');
                     $('#tl'+(i+1)).attr("href", tid_link + transactions[i].id);
-                    $('#spinner').remove();
                     $('#tl'+(i+1)).removeClass('invisible');
                     $('#tl'+(i+1)).addClass('animated fadeInRight');
                 }

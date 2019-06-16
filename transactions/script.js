@@ -10,7 +10,6 @@ $( document ).ready(function() {
 
 function transactions() {
     rise.transactions.getList({limit: 5, orderBy:"timestamp:desc"}).then(function ({transactions}) {
-            console.log(transactions);
             let tid_link = 'https://explorer.rise.vision/tx/';
             //for (tx in range) {}
             let i;

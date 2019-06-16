@@ -8,6 +8,7 @@ $( document ).ready(function() {
     alert_success('Got height!');
     alert_warning('Waiting for a new block to get delegate info and id.');
     setInterval(get_height,5000);
+    setInterval(clear_tx, 120000);
 });
 
 function get_height(){
@@ -15,7 +16,7 @@ function get_height(){
     rise.blocks.getStatus(function(error, result) {
         if (!error) {
             let height = result["height"];
-            let supply = result["supply"];
+            let supply = result["supply"]/satoshi_to_rise;
             let displayed_height = document.getElementById("height").innerHTML;
             if (parseInt(displayed_height) < parseInt(height)) {
                 warning.close();//close warning when block updates
@@ -24,7 +25,9 @@ function get_height(){
                 $('#height').addClass('animated rollIn');//animate only on change
             } //else?
             $('#height').text(height); //get height value
-            $('#supply').text(Math.round(supply/satoshi_to_rise) + ' RISE in circulation');
+            var split_supply = supply.toString().match(/.{1,3}/g);
+            split_supply = split_supply[0]+','+split_supply[1]+','+split_supply[2];
+            $('#supply').text(split_supply + ' RISE in circulation');
             $('#words').text(numberToWords.toWords(height) + ' blocks');
             return height, supply;
         } else {
@@ -81,6 +84,11 @@ function get_delegate(public_key){
 function block_info(id) {
     rise.blocks.getBlock(id).then(function({ block }) {
         console.log(block);
+        transactions = block['transactions'];
+        if (transactions['length'] >= 1){
+            display_tx(transactions);
+            return block, transactions;
+        }
         return block;
     })
         .catch(function(err) {
@@ -88,6 +96,24 @@ function block_info(id) {
             console.log('Error: ', err); // handle error
             block_info(id);//retry
         })
+}
+
+function clear_tx(){
+    $('#display_tx').removeClass('animated', 'slideOutRight');
+    $('#display_tx').addClass('animated', 'slideOutRight');
+    $('#display_tx').text('');
+}
+
+function display_tx(transactions){
+    for (let tx in transactions){
+        let sender = transactions[tx].senderId.substring(0,5) + '...R ';
+        let amount =  Math.round(transactions[tx].amount/satoshi_to_rise) + ' RISE ';
+        let reciever = ' ' + transactions[tx].recipientId.substring(0,6)+'...R ';
+        $('#display_tx').append(sender + 'sent ' + amount + 'to' + reciever + "<br>");
+        $('#display_tx').removeClass('animated', 'slideOutRight');
+        $('#display_tx').addClass('animated', 'slideOutRight');
+        console.log(transactions);
+    }
 }
 
 function alert_success(message){

@@ -8,7 +8,7 @@ $( document ).ready(function() {
     alert_success('Got height!');
     alert_warning('Waiting for a new block to get delegate info and id.');
     setInterval(get_height,5000);
-    setInterval(clear_tx, 120000);
+    $('#tx_table').hide();
 });
 
 function get_height(){
@@ -99,19 +99,37 @@ function block_info(id) {
 }
 
 function clear_tx(){
-    $('#display_tx').removeClass('animated', 'slideOutRight');
-    $('#display_tx').addClass('animated', 'slideOutRight');
-    $('#display_tx').text('');
+    //$("#tx_table tr").remove(); //empties table
+    //$('#tx_table').hide() //hides table
+
 }
 
 function display_tx(transactions){
+    $('#tx_table').show();
     for (let tx in transactions){
         let sender = transactions[tx].senderId.substring(0,5) + '...R ';
         let amount =  Math.round(transactions[tx].amount/satoshi_to_rise) + ' RISE ';
-        let reciever = ' ' + transactions[tx].recipientId.substring(0,6)+'...R ';
-        $('#display_tx').append(sender + 'sent ' + amount + 'to' + reciever + "<br>");
-        $('#display_tx').removeClass('animated', 'slideOutRight');
-        $('#display_tx').addClass('animated', 'slideOutRight');
+        let reciever = transactions[tx].recipientId.substring(0,6)+'...R ';
+        let height = transactions[tx].height;
+        let type = parseInt(transactions[tx].type);
+        if (type == 0){
+            type = 'Send'
+        } else if (type === 1) {
+            type = 'Second Sig'
+        } else if (type === 2) {
+            type = 'Delegate Rgstr'
+        } else if (type === 3) {
+            type = 'Vote'
+        } else if (type === 4) {
+            type = 'Multisig Rgstr'
+        }
+        $('#tx_table tbody').prepend('<tr>\n' +
+            '<th scope="row">'+ type +'</th>\n' +
+            '<td>' + sender + '</td>\n' +
+            '<td>' + amount + '</td>\n' +
+            '<td>' + reciever + '</td>\n' +
+            '<td>' + height + '</td>\n' +
+            '</tr>');
         console.log(transactions);
     }
 }
